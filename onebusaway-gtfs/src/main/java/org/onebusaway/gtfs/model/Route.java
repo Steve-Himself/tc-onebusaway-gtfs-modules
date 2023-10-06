@@ -86,6 +86,7 @@ public final class Route extends IdentityBean<AgencyAndId> {
   @CsvField(optional = true)
   private int attributes;
 
+  @CsvField(ignore = true)
   private Set<Line> lines = new HashSet<>();
 
   public Route() {

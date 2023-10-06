@@ -39,6 +39,7 @@ public final class Line extends IdentityBean<AgencyAndId> {
   @CsvField(optional = true)
   private int sortOrder = MISSING_VALUE;
 
+  @CsvField(ignore = true)
   private Set<Route> routes = new HashSet<>();
 
   public Line() {

@@ -141,8 +141,14 @@
         <property name="sortOrder" />
         <many-to-one name="agency" not-null="true" />
         <set name="routes" table="gtfs_route_lines" lazy="true">
-            <key column="id" />
-            <many-to-many column="routeId" class="org.onebusaway.gtfs.model.Route" />
+            <key>
+                <column name="agencyId" />
+                <column name="id" />
+            </key>
+            <many-to-many class="org.onebusaway.gtfs.model.Route">
+                <column name="routeAgencyId" />
+                <column name="routeId" />
+            </many-to-many>
         </set>
 
     </class>
@@ -161,8 +167,15 @@
         <property name="textColor" />
         <many-to-one name="agency" not-null="true" />
         <set name="lines" table="gtfs_route_lines" inverse="true" lazy="true">
-            <key column="id"/>
-            <many-to-many column="lineId" class="org.onebusaway.gtfs.model.Line" />
+            <key>
+                <column name="agencyId" />
+                <column name="id" />
+            </key>
+            <many-to-many class="org.onebusaway.gtfs.model.Line">
+                <column name="lineAgencyId" />
+                <column name="lineId" />
+            </many-to-many>
+
         </set>
     </class>
 

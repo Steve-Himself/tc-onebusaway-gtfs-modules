@@ -35,7 +35,7 @@
         FROM Stop stop WHERE stop.zoneId = :zoneId
     </query>
     <query name="tripsByLine" read-only="true">
-        SELECT trip FROM RouteLine rl JOIN Trip trip ON trip.route = rl.route WHERE rl.line = :line
+        SELECT trip FROM Line line JOIN line.routes as routes JOIN Trip trip ON trip.route = routes.id WHERE line = :line
     </query>
     <query name="tripsByRoute" read-only="true">
         FROM Trip trip WHERE trip.route = :route
