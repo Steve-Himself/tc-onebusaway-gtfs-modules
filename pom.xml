@@ -160,7 +160,6 @@
         <version>3.4.1</version>
         <configuration>
           <!-- Turn off Java 8 strict Javadoc checking -->
-          <additionalparam>-Xdoclint:none</additionalparam>
           <source>8</source>
           <failOnError>false</failOnError>
         </configuration>

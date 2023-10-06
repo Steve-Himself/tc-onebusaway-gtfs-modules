@@ -22,6 +22,9 @@
     <query name="agencyIdsReferencingServiceId" read-only="true">
         SELECT trip.id.agencyId FROM Trip trip WHERE trip.serviceId = :serviceId GROUP BY trip.id.agencyId
     </query>
+    <query name="linesForAgency" read-only="true">
+        FROM Line line WHERE line.agency = :agency
+    </query>
     <query name="routesForAgency" read-only="true">
         FROM Route route WHERE route.agency = :agency
     </query>
@@ -30,6 +33,9 @@
     </query>
     <query name="stopsForZoneId" read-only="true">
         FROM Stop stop WHERE stop.zoneId = :zoneId
+    </query>
+    <query name="tripsByLine" read-only="true">
+        SELECT trip FROM RouteLine rl JOIN Trip trip ON trip.route = rl.route WHERE rl.line = :line
     </query>
     <query name="tripsByRoute" read-only="true">
         FROM Trip trip WHERE trip.route = :route

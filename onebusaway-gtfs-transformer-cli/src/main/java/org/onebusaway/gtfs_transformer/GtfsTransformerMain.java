@@ -40,6 +40,7 @@ import org.onebusaway.gtfs_transformer.updates.LocalVsExpressUpdateStrategy;
 import org.onebusaway.gtfs_transformer.updates.RemoveDuplicateTripsStrategy;
 import org.onebusaway.gtfs_transformer.updates.RemoveRepeatedStopTimesStrategy;
 import org.onebusaway.gtfs_transformer.updates.TrivialStopTimeInterpolationStrategy;
+import org.onebusaway.gtfs_transformer.updates.RemoveUnreferencedLinesStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,6 +87,8 @@ public class GtfsTransformerMain {
   private static final String ARG_REMOVE_DUPLICATE_TRIPS = "removeDuplicateTrips";
 
   private static final String ARG_OVERWRITE_DUPLICATES = "overwriteDuplicates";
+
+  private static final String ARG_REMOVE_UNREFERENCED_LINES = "removeUnreferencedLines";
 
   private static CommandLineParser _parser = new PosixParser();
 
@@ -216,6 +219,9 @@ public class GtfsTransformerMain {
 
       String name = option.getOpt();
 
+      if (name.equals(ARG_REMOVE_UNREFERENCED_LINES))
+        configureRemoveUnreferencedLines(transformer);
+
       if (name.equals(ARG_REMOVE_REPEATED_STOP_TIMES))
         configureRemoveRepeatedStopTimes(transformer);
 
@@ -309,6 +315,10 @@ public class GtfsTransformerMain {
       options[i] = orderedOptions.get(i).getObject();
 
     return options;
+  }
+
+  private void configureRemoveUnreferencedLines(GtfsTransformer updater) {
+    updater.addTransform(new RemoveUnreferencedLinesStrategy());
   }
 
   private void configureRemoveRepeatedStopTimes(GtfsTransformer updater) {

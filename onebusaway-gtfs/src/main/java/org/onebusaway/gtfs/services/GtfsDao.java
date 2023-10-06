@@ -127,8 +127,20 @@ public interface GtfsDao extends GenericDao {
   public Level getLevelForId(AgencyAndId id);
 
   /****
+   * {@link Line} Methods
+   ****/
+
+  public Collection<Line> getAllLines();
+
+  public Collection<Route> getLineRoutes(AgencyAndId lineId);
+
+  public Collection<RouteLine> getAllRouteLines();
+
+  /****
    * {@link Route} Methods
    ****/
+
+  public Collection<Line> getRouteLines(AgencyAndId routeId);
 
   public Collection<Route> getAllRoutes();
 

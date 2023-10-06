@@ -17,12 +17,7 @@ package org.onebusaway.gtfs.impl.translation;
 
 import org.onebusaway.csv_entities.schema.BeanWrapper;
 import org.onebusaway.csv_entities.schema.BeanWrapperFactory;
-import org.onebusaway.gtfs.model.Agency;
-import org.onebusaway.gtfs.model.FeedInfo;
-import org.onebusaway.gtfs.model.Route;
-import org.onebusaway.gtfs.model.Stop;
-import org.onebusaway.gtfs.model.StopTime;
-import org.onebusaway.gtfs.model.Trip;
+import org.onebusaway.gtfs.model.*;
 import org.onebusaway.gtfs.model.translation.PropertyTranslation;
 import org.onebusaway.gtfs.model.translation.TranslationServiceData;
 import org.onebusaway.gtfs.services.translation.TranslationService;
@@ -89,6 +84,10 @@ public class TranslationServiceImpl implements TranslationService  {
             return ((Agency) object).getId().equals(id);
         } else if (object instanceof Stop) {
             return ((Stop) object).getId().getId().equals(id);
+        } else if (object instanceof Line) {
+            return ((Line) object).getId().getId().equals(id);
+        } else if (object instanceof RouteLine) {
+            return ((RouteLine) object).getId().equals(id);
         } else if (object instanceof Route) {
             return ((Route) object).getId().getId().equals(id);
         } else if (object instanceof Trip) {

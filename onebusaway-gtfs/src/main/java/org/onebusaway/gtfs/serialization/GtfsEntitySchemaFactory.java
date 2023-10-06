@@ -26,10 +26,7 @@ import org.onebusaway.csv_entities.schema.DefaultEntitySchemaFactory;
 import org.onebusaway.csv_entities.schema.EntitySchemaFactoryHelper;
 import org.onebusaway.csv_entities.schema.beans.CsvEntityMappingBean;
 import org.onebusaway.gtfs.model.*;
-import org.onebusaway.gtfs.serialization.comparators.ServiceCalendarComparator;
-import org.onebusaway.gtfs.serialization.comparators.ServiceCalendarDateComparator;
-import org.onebusaway.gtfs.serialization.comparators.ShapePointComparator;
-import org.onebusaway.gtfs.serialization.comparators.StopTimeComparator;
+import org.onebusaway.gtfs.serialization.comparators.*;
 
 public class GtfsEntitySchemaFactory {
 
@@ -84,6 +81,8 @@ public class GtfsEntitySchemaFactory {
             getComparatorForIdentityBeanType(Area.class));
     comparators.put(Block.class,
         getComparatorForIdentityBeanType(Block.class));
+    comparators.put(Line.class, getComparatorForIdentityBeanType(Line.class));
+    comparators.put(RouteLine.class, new RouteLineComparator());
     comparators.put(Route.class, getComparatorForIdentityBeanType(Route.class));
     comparators.put(Stop.class, getComparatorForIdentityBeanType(Stop.class));
     comparators.put(Trip.class, getComparatorForIdentityBeanType(Trip.class));

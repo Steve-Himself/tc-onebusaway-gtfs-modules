@@ -20,6 +20,9 @@ import org.onebusaway.csv_entities.schema.annotations.CsvFields;
 import org.onebusaway.gtfs.serialization.mappings.RouteAgencyIdFieldMappingFactory;
 import org.onebusaway.gtfs.serialization.mappings.RouteAgencyFieldMappingFactory;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @CsvFields(filename = "routes.txt", prefix = "route_")
 public final class Route extends IdentityBean<AgencyAndId> {
 
@@ -80,6 +83,11 @@ public final class Route extends IdentityBean<AgencyAndId> {
   @CsvField(optional = true, name = "regional_fare_card", defaultValue = "0")
   private int regionalFareCardAccepted;
 
+  @CsvField(optional = true)
+  private int attributes;
+
+  private Set<Line> lines = new HashSet<>();
+
   public Route() {
 
   }
@@ -99,6 +107,7 @@ public final class Route extends IdentityBean<AgencyAndId> {
     this.brandingUrl = r.brandingUrl;
     this.eligibilityRestricted = r.eligibilityRestricted;
     this.regionalFareCardAccepted = r.regionalFareCardAccepted;
+    this.attributes = r.attributes;
   }
 
   public AgencyAndId getId() {
@@ -244,6 +253,22 @@ public final class Route extends IdentityBean<AgencyAndId> {
 
   public void setRegionalFareCardAccepted(int regionalFareCardAccepted) {
     this.regionalFareCardAccepted = regionalFareCardAccepted;
+  }
+
+  public int getAttributes() {
+    return attributes;
+  }
+
+  public void setAttributes(int attributes) {
+    this.attributes = attributes;
+  }
+
+  public Set<Line> getLines() {
+    return lines;
+  }
+
+  public void setLines(Set<Line> lines) {
+    this.lines = lines;
   }
 
   @Override

@@ -43,6 +43,12 @@ public interface GtfsRelationalDao extends GtfsDao {
   public List<String> getTripAgencyIdsReferencingServiceId(AgencyAndId serviceId);
 
   /****
+   * Line Methods
+   ****/
+
+  public List<Line> getLinesForAgency(Agency agency);
+
+  /****
    * Route Methods
    ****/
 
@@ -59,6 +65,8 @@ public interface GtfsRelationalDao extends GtfsDao {
   /****
    * {@link Trip} Methods
    ****/
+
+  List<Trip> getTripsForLine(Line line);
 
   public List<Trip> getTripsForRoute(Route route);
 

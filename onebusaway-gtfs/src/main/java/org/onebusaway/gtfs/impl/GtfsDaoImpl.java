@@ -253,7 +253,24 @@ public class GtfsDaoImpl extends GenericDaoImpl implements GtfsMutableDao {
     return getEntityForId(Level.class, id);
   }
 
+  @Override
+  public Collection<Line> getAllLines() {
+      return getAllEntitiesForType(Line.class);
+  }
 
+  @Override
+  public Collection<RouteLine> getAllRouteLines() {
+    return getAllEntitiesForType(RouteLine.class);
+  }
+  @Override
+  public Collection<Route> getLineRoutes(AgencyAndId lineId) {
+    return getEntityForId(Line.class, lineId).getRoutes();
+  }
+
+  @Override
+  public Collection<Line> getRouteLines(AgencyAndId routeId) {
+    return getEntityForId(Route.class, routeId).getLines();
+  }
 
   public Facility getFacilityForId(AgencyAndId id) { return getEntityForId(Facility.class, id);}
   public FacilityProperty getFacilityPropertiesForId(AgencyAndId id) { return getEntityForId(FacilityProperty.class, id);}

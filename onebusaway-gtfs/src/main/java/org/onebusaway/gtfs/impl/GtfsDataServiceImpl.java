@@ -91,6 +91,11 @@ public class GtfsDataServiceImpl implements GtfsDataService {
     }
 
     @Override
+    public List<Line> getLinesForAgency(Agency agency) {
+        return _dao.getLinesForAgency(agency);
+    }
+
+    @Override
     public Collection<FareAttribute> getAllFareAttributes() {
         return _dao.getAllFareAttributes();
     }
@@ -155,6 +160,11 @@ public class GtfsDataServiceImpl implements GtfsDataService {
     }
 
     @Override
+    public List<Trip> getTripsForLine(Line line) {
+        return _dao.getTripsForLine(line);
+    }
+
+    @Override
     public List<Trip> getTripsForRoute(Route route) {
         return _dao.getTripsForRoute(route);
     }
@@ -212,6 +222,26 @@ public class GtfsDataServiceImpl implements GtfsDataService {
     @Override
     public Level getLevelForId(AgencyAndId id) {
         return _dao.getLevelForId(id);
+    }
+
+    @Override
+    public Collection<Line> getAllLines() {
+        return _dao.getAllLines();
+    }
+
+    @Override
+    public Collection<Route> getLineRoutes(AgencyAndId lineId) {
+        return _dao.getLineRoutes(lineId);
+    }
+
+    @Override
+    public Collection<RouteLine> getAllRouteLines() {
+        return _dao.getAllRouteLines();
+    }
+
+    @Override
+    public Collection<Line> getRouteLines(AgencyAndId routeId) {
+        return _dao.getRouteLines(routeId);
     }
 
     @Override

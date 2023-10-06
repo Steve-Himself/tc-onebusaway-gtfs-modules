@@ -127,7 +127,26 @@
         <property name="pathwayCode" />
         <property name="wheelchairTraversalTime" />
     </class>
-    
+
+    <class name="org.onebusaway.gtfs.model.Line" table="gtfs_lines">
+        <composite-id name="id" class="org.onebusaway.gtfs.model.AgencyAndId">
+            <key-property name="agencyId" length="50" />
+            <key-property name="id" />
+        </composite-id>
+        <property name="shortName" />
+        <property name="longName" />
+        <property name="url" />
+        <property name="color" />
+        <property name="textColor" />
+        <property name="sortOrder" />
+        <many-to-one name="agency" not-null="true" />
+        <set name="routes" table="gtfs_route_lines" lazy="true">
+            <key column="id" />
+            <many-to-many column="routeId" class="org.onebusaway.gtfs.model.Route" />
+        </set>
+
+    </class>
+
     <class name="org.onebusaway.gtfs.model.Route" table="gtfs_routes">
         <composite-id name="id" class="org.onebusaway.gtfs.model.AgencyAndId">
             <key-property name="agencyId" length="50" />
@@ -141,6 +160,10 @@
         <property name="color" />
         <property name="textColor" />
         <many-to-one name="agency" not-null="true" />
+        <set name="lines" table="gtfs_route_lines" inverse="true" lazy="true">
+            <key column="id"/>
+            <many-to-many column="lineId" class="org.onebusaway.gtfs.model.Line" />
+        </set>
     </class>
 
     <class name="org.onebusaway.gtfs.model.ServiceCalendar" table="gtfs_calendars">
@@ -213,6 +236,10 @@
                 <column name="level_agencyId" length="50" />
                 <column name="level_id" />
             </many-to-one>
+            <property name="isPublic" />
+            <property name="municipality" />
+            <property name="districtId" />
+            <property name="districtName" />
         </union-subclass>
         <union-subclass name="org.onebusaway.gtfs.model.Location" table="gtfs_locations">
             <property name="geometry" />
@@ -253,7 +280,6 @@
         <property name="pickupType" />
         <property name="dropOffType" />
         <property name="shapeDistTraveled" />
-
     </class>
 
     <class name="org.onebusaway.gtfs.model.Transfer" table="gtfs_transfers">

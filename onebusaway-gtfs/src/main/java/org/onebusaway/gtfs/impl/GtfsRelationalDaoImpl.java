@@ -45,6 +45,8 @@ public class GtfsRelationalDaoImpl extends GtfsDaoImpl implements
 
   private Map<AgencyAndId, List<String>> _tripAgencyIdsByServiceId = null;
 
+  private Map<Agency, List<Line>> _linesByAgency = null;
+
   private Map<Agency, List<Route>> _routesByAgency = null;
 
   private Map<Stop, List<Stop>> _stopsByStation = null;
@@ -54,6 +56,8 @@ public class GtfsRelationalDaoImpl extends GtfsDaoImpl implements
   private Map<Trip, List<StopTime>> _stopTimesByTrip = null;
 
   private Map<Stop, List<StopTime>> _stopTimesByStop = null;
+
+  private Map<Line, List<Trip>> _tripsByLine = null;
 
   private Map<Route, List<Trip>> _tripsByRoute = null;
 
@@ -135,6 +139,13 @@ public class GtfsRelationalDaoImpl extends GtfsDaoImpl implements
   }
 
   @Override
+  public List<Line> getLinesForAgency(Agency agency) {
+    if (_linesByAgency == null)
+      _linesByAgency = mapToValueList(getAllLines(), "agency", Agency.class);
+    return list(_linesByAgency.get(agency));
+  }
+
+  @Override
   public List<Route> getRoutesForAgency(Agency agency) {
     if (_routesByAgency == null)
       _routesByAgency = mapToValueList(getAllRoutes(), "agency", Agency.class);
@@ -198,6 +209,13 @@ public class GtfsRelationalDaoImpl extends GtfsDaoImpl implements
     if (_stopTimesByStop == null)
       _stopTimesByStop = mapToValueList(getAllStopTimes(), "stop", Stop.class);
     return list(_stopTimesByStop.get(stop));
+  }
+
+  @Override
+  public List<Trip> getTripsForLine(Line line) {
+    if (_tripsByLine == null)
+      _tripsByLine = mapToValueList(getAllTrips(), "line", Line.class);
+    return list(_tripsByLine.get(line));
   }
 
   @Override
