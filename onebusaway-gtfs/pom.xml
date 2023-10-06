@@ -63,6 +63,9 @@
         <configuration>
           <excludes combine.children="append">
             <exclude>src/test/resources/org/onebusaway/gtfs/**</exclude>
+            <exclude>src/main/java/org/onebusaway/gtfs/model/Line.java</exclude>
+            <exclude>src/main/java/org/onebusaway/gtfs/model/RouteLine.java</exclude>
+            <exclude>src/main/java/org/onebusaway/gtfs/serialization/comparators/RouteLineComparator.java</exclude>
           </excludes>
         </configuration>
       </plugin>
