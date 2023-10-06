@@ -200,9 +200,9 @@
           <excludes combine.children="append">
             <exclude>**/ci.yml</exclude>
             <exclude>**/simplelogger.properties</exclude>
-            <exclude>onebusaway-gtfs/src/main/java/org/onebusaway/gtfs/model/Line.java</exclude>
-            <exclude>onebusaway-gtfs/src/main/java/org/onebusaway/gtfs/model/RouteLine.java</exclude>
-            <exclude>onebusaway-gtfs/src/main/java/org/onebusaway/gtfs/serialization/comparators/RouteLineComparator.java</exclude>
+            <exclude>**/onebusaway-gtfs/src/main/java/org/onebusaway/gtfs/model/Line.java</exclude>
+            <exclude>**/onebusaway-gtfs/src/main/java/org/onebusaway/gtfs/model/RouteLine.java</exclude>
+            <exclude>**/onebusaway-gtfs/src/main/java/org/onebusaway/gtfs/serialization/comparators/RouteLineComparator.java</exclude>
           </excludes>
         </configuration>
       </plugin>
