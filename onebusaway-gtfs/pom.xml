@@ -66,6 +66,7 @@
             <exclude>src/main/java/org/onebusaway/gtfs/model/Line.java</exclude>
             <exclude>src/main/java/org/onebusaway/gtfs/model/RouteLine.java</exclude>
             <exclude>src/main/java/org/onebusaway/gtfs/serialization/comparators/RouteLineComparator.java</exclude>
+            <exclude>src/main/java/org/onebusaway/gtfs/serialization/mappings/RouteLineIdFieldMappingFactory.java</exclude>
           </excludes>
         </configuration>
       </plugin>
