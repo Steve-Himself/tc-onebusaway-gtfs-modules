@@ -17,6 +17,7 @@
 package org.onebusaway.gtfs_transformer.impl;
 
 import org.onebusaway.csv_entities.CsvEntityReader;
+import org.onebusaway.csv_entities.CsvInputSource;
 import org.onebusaway.gtfs.model.Route;
 import org.onebusaway.gtfs.serialization.GtfsReader;
 import org.onebusaway.gtfs.services.GtfsMutableRelationalDao;
@@ -40,7 +41,7 @@ public class MergeRouteFromRouteExtStrategy implements GtfsTransformStrategy {
     @Override
     public void run(TransformContext context, GtfsMutableRelationalDao dao) {
         try {
-            var inputSource = context.getReader().getInputSource();
+            CsvInputSource inputSource = context.getReader().getInputSource();
 
             if (inputSource.hasResource("routes_ext.txt")) {
                 HashMap<String, Route> referenceRoutes = new HashMap<>();
