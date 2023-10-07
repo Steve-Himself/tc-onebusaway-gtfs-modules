@@ -28,10 +28,7 @@ import org.onebusaway.csv_entities.CsvEntityContextImpl;
 import org.onebusaway.csv_entities.exceptions.MissingRequiredFieldException;
 import org.onebusaway.csv_entities.schema.*;
 import org.onebusaway.gtfs.model.Trip;
-import org.onebusaway.gtfs_transformer.GtfsTransformer;
-import org.onebusaway.gtfs_transformer.GtfsTransformerLibrary;
-import org.onebusaway.gtfs_transformer.TransformSpecificationException;
-import org.onebusaway.gtfs_transformer.TransformSpecificationMissingArgumentException;
+import org.onebusaway.gtfs_transformer.*;
 import org.onebusaway.gtfs_transformer.collections.ServiceIdKey;
 import org.onebusaway.gtfs_transformer.collections.ServiceIdKeyMatch;
 import org.onebusaway.gtfs_transformer.collections.ShapeIdKey;
@@ -93,7 +90,7 @@ public class TransformFactory {
   
   private static Pattern _replaceMatcher = Pattern.compile("^s/(.*)/(.*)/$");
 
-  private final GtfsTransformer _transformer;
+  private final IGtfsTransformer _transformer;
 
   private List<String> _entityPackages = new ArrayList<String>();
 
@@ -101,7 +98,7 @@ public class TransformFactory {
 
   private final PropertyMethodResolverImpl _propertyMethodResolver;
 
-  public TransformFactory(GtfsTransformer transformer) {
+  public TransformFactory(IGtfsTransformer transformer) {
     _transformer = transformer;
     addEntityPackage("org.onebusaway.gtfs.model");
     _schemaCache.addEntitySchemasFromGtfsReader(_transformer.getReader());
@@ -320,27 +317,6 @@ public class TransformFactory {
         }
         else if (opType.equals("verify_route_ids")) {
           handleTransformOperation(line, json, new VerifyRouteIds());
-        }
-        else if (opType.equals("KCMSuite")){
-          String baseUrl = "https://raw.github.com/wiki/camsys/onebusaway-application-modules";
-
-          handleTransformOperation(line, json, new RemoveMergedTripsStrategy());
-          handleTransformOperation(line, json, new RemoveRepeatedStopTimesStrategy());
-          handleTransformOperation(line, json, new RemoveEmptyBlockTripsStrategy());
-          handleTransformOperation(line, json, new EnsureStopTimesIncreaseUpdateStrategy());
-
-          configureStopNameUpdates(_transformer, baseUrl
-                  + "/KingCountyMetroStopNameModifications.md");
-
-
-          try {
-            GtfsTransformerLibrary.configureTransformation(_transformer, baseUrl
-                    + "/KingCountyMetroModifications.md");
-          } catch (TransformSpecificationException e) {
-            throw new RuntimeException(e);
-          }
-
-          _transformer.addTransform(new LocalVsExpressUpdateStrategy());
         }
         else if (opType.equals("transform")) {
           handleTransformOperation(line, json);
@@ -885,7 +861,7 @@ public class TransformFactory {
 //    }
 //  }
 
-  private void configureStopNameUpdates(GtfsTransformer transformer, String path) {
+  private void configureStopNameUpdates(IGtfsTransformer transformer, String path) {
 
     if (path == null)
       return;

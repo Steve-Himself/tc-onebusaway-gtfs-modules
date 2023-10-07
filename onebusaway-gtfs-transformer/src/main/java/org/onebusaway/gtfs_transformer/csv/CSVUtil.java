@@ -16,16 +16,23 @@
 package org.onebusaway.gtfs_transformer.csv;
 
 import org.onebusaway.csv_entities.CsvEntityReader;
+import org.onebusaway.csv_entities.CsvInputSource;
 import org.onebusaway.csv_entities.EntityHandler;
+import org.onebusaway.csv_entities.schema.EntitySchemaFactory;
 
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CSVUtil {
-
     public static <T> List<T> readCsv(final Class<T> klass, String csv) {
-        CsvEntityReader reader = new CsvEntityReader();
+        return readCsv(klass, csv, null);
+    }
+
+    public static <T> List<T> readCsv(final Class<T> klass, String csv, CsvEntityReader reader) {
+        if (reader == null) {
+            reader = new CsvEntityReader();
+        }
         final List<T> ret = new ArrayList<>();
         reader.addEntityHandler(new EntityHandler() {
             @Override

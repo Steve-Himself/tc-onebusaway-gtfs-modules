@@ -44,7 +44,7 @@ import org.onebusaway.gtfs_transformer.services.TransformContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class GtfsTransformer {
+public class GtfsTransformer implements IGtfsTransformer {
   
   private static Logger _log = LoggerFactory.getLogger(GtfsTransformer.class);
 
@@ -134,6 +134,7 @@ public class GtfsTransformer {
     _agencyId = agencyId;
   }
 
+  @Override
   public GtfsReader getReader() {
     return _reader;
   }
@@ -146,6 +147,7 @@ public class GtfsTransformer {
     return _writer;
   }
 
+  @Override
   public GtfsRelationalDao getDao() {
     return _dao;
   }

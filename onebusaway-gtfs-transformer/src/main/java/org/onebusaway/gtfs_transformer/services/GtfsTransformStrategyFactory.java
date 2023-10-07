@@ -15,8 +15,8 @@
  */
 package org.onebusaway.gtfs_transformer.services;
 
-import org.onebusaway.gtfs_transformer.GtfsTransformer;
+import org.onebusaway.gtfs_transformer.IGtfsTransformer;
 
 public interface GtfsTransformStrategyFactory {
-  public void createTransforms(GtfsTransformer transformer);
+  public void createTransforms(IGtfsTransformer transformer);
 }
