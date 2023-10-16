@@ -16,29 +16,25 @@
  */
 package org.onebusaway.gtfs.serialization.mappings;
 
-import java.util.List;
-import java.util.Map;
-
 import org.onebusaway.csv_entities.CsvEntityContext;
 import org.onebusaway.csv_entities.exceptions.MissingRequiredFieldException;
-import org.onebusaway.csv_entities.schema.AbstractFieldMapping;
-import org.onebusaway.csv_entities.schema.BeanWrapper;
-import org.onebusaway.csv_entities.schema.EntitySchemaFactory;
-import org.onebusaway.csv_entities.schema.FieldMapping;
-import org.onebusaway.csv_entities.schema.FieldMappingFactory;
+import org.onebusaway.csv_entities.schema.*;
 import org.onebusaway.gtfs.model.Agency;
-import org.onebusaway.gtfs.model.Route;
+import org.onebusaway.gtfs.model.RouteGroup;
 import org.onebusaway.gtfs.serialization.GtfsReader;
 import org.onebusaway.gtfs.serialization.GtfsReaderContext;
 
+import java.util.List;
+import java.util.Map;
+
 /**
- * Responsible for setting the {@link Route#setAgency(Agency)} from a csv
+ * Responsible for setting the {@link RouteGroup#setAgency(Agency)} from a csv
  * "agency_id" field in "routes.txt" and vice-versa.
  * 
  * @author bdferris
- * @see Route#setAgency(Agency)
+ * @see RouteGroup#setAgency(Agency)
  */
-public class RouteAgencyFieldMappingFactory implements FieldMappingFactory {
+public class RouteGroupAgencyFieldMappingFactory implements FieldMappingFactory {
 
   public FieldMapping createFieldMapping(EntitySchemaFactory schemaFactory,
       Class<?> entityType, String csvFieldName, String objFieldName,
@@ -66,8 +62,8 @@ public class RouteAgencyFieldMappingFactory implements FieldMappingFactory {
       if (isMissing(csvValues)) {
         List<Agency> agencies = ctx.getAgencies();
         if (agencies.isEmpty()) {
-          throw new AgencyNotFoundException(Route.class,
-              object.getWrappedInstance(Route.class));
+          throw new AgencyNotFoundException(RouteGroup.class,
+              object.getWrappedInstance(RouteGroup.class));
         } else if (agencies.size() > 1) {
           throw new MissingRequiredFieldException(_entityType, _csvFieldName);
         }
@@ -82,8 +78,8 @@ public class RouteAgencyFieldMappingFactory implements FieldMappingFactory {
           }
         }
         if (agency == null)
-          throw new AgencyNotFoundException(Route.class,
-              object.getWrappedInstance(Route.class), agencyId);
+          throw new AgencyNotFoundException(RouteGroup.class,
+              object.getWrappedInstance(RouteGroup.class), agencyId);
       }
 
       object.setPropertyValue(_objFieldName, agency);

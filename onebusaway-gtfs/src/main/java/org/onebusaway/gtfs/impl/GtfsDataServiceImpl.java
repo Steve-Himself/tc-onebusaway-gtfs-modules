@@ -91,8 +91,8 @@ public class GtfsDataServiceImpl implements GtfsDataService {
     }
 
     @Override
-    public List<Line> getLinesForAgency(Agency agency) {
-        return _dao.getLinesForAgency(agency);
+    public List<RouteGroup> getRouteGroupsForAgency(Agency agency) {
+        return _dao.getRouteGroupsForAgency(agency);
     }
 
     @Override
@@ -160,8 +160,8 @@ public class GtfsDataServiceImpl implements GtfsDataService {
     }
 
     @Override
-    public List<Trip> getTripsForLine(Line line) {
-        return _dao.getTripsForLine(line);
+    public List<Trip> getTripsForLine(RouteGroup routeGroup) {
+        return _dao.getTripsForLine(routeGroup);
     }
 
     @Override
@@ -225,23 +225,18 @@ public class GtfsDataServiceImpl implements GtfsDataService {
     }
 
     @Override
-    public Collection<Line> getAllLines() {
-        return _dao.getAllLines();
+    public Collection<RouteGroup> getRouteGroups() {
+        return _dao.getRouteGroups();
     }
 
     @Override
-    public Collection<Route> getLineRoutes(AgencyAndId lineId) {
-        return _dao.getLineRoutes(lineId);
+    public Collection<Route> getRouteGroupRoutes(AgencyAndId routeGroupId) {
+        return _dao.getRouteGroupRoutes(routeGroupId);
     }
 
     @Override
-    public Collection<RouteLine> getAllRouteLines() {
-        return _dao.getAllRouteLines();
-    }
-
-    @Override
-    public Collection<Line> getRouteLines(AgencyAndId routeId) {
-        return _dao.getRouteLines(routeId);
+    public Collection<RouteGroup> getRouteRouteGroups(AgencyAndId routeId) {
+        return _dao.getRouteRouteGroups(routeId);
     }
 
     @Override

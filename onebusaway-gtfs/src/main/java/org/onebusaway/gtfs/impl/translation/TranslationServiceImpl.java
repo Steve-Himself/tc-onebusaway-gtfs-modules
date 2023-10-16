@@ -84,10 +84,10 @@ public class TranslationServiceImpl implements TranslationService  {
             return ((Agency) object).getId().equals(id);
         } else if (object instanceof Stop) {
             return ((Stop) object).getId().getId().equals(id);
-        } else if (object instanceof Line) {
-            return ((Line) object).getId().getId().equals(id);
-        } else if (object instanceof RouteLine) {
-            return ((RouteLine) object).getId().equals(id);
+        } else if (object instanceof RouteGroup) {
+            return ((RouteGroup) object).getId().getId().equals(id);
+        } else if (object instanceof RouteGroupPair) {
+            return ((RouteGroupPair) object).getId().equals(id);
         } else if (object instanceof Route) {
             return ((Route) object).getId().getId().equals(id);
         } else if (object instanceof Trip) {

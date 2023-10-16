@@ -83,11 +83,8 @@ public final class Route extends IdentityBean<AgencyAndId> {
   @CsvField(optional = true, name = "regional_fare_card", defaultValue = "0")
   private int regionalFareCardAccepted;
 
-  @CsvField(optional = true)
-  private int attributes;
-
   @CsvField(ignore = true)
-  private Set<Line> lines = new HashSet<>();
+  private Set<RouteGroup> routeGroups = new HashSet<>();
 
   public Route() {
 
@@ -108,7 +105,6 @@ public final class Route extends IdentityBean<AgencyAndId> {
     this.brandingUrl = r.brandingUrl;
     this.eligibilityRestricted = r.eligibilityRestricted;
     this.regionalFareCardAccepted = r.regionalFareCardAccepted;
-    this.attributes = r.attributes;
   }
 
   public AgencyAndId getId() {
@@ -256,20 +252,12 @@ public final class Route extends IdentityBean<AgencyAndId> {
     this.regionalFareCardAccepted = regionalFareCardAccepted;
   }
 
-  public int getAttributes() {
-    return attributes;
+  public Set<RouteGroup> getRouteGroups() {
+    return routeGroups;
   }
 
-  public void setAttributes(int attributes) {
-    this.attributes = attributes;
-  }
-
-  public Set<Line> getLines() {
-    return lines;
-  }
-
-  public void setLines(Set<Line> lines) {
-    this.lines = lines;
+  public void setRouteGroups(Set<RouteGroup> routeGroups) {
+    this.routeGroups = routeGroups;
   }
 
   @Override

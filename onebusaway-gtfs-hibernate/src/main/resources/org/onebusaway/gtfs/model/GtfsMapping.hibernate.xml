@@ -128,7 +128,7 @@
         <property name="wheelchairTraversalTime" />
     </class>
 
-    <class name="org.onebusaway.gtfs.model.Line" table="gtfs_lines">
+    <class name="org.onebusaway.gtfs.model.RouteGroup" table="gtfs_route_groups">
         <composite-id name="id" class="org.onebusaway.gtfs.model.AgencyAndId">
             <key-property name="agencyId" length="50" />
             <key-property name="id" />
@@ -140,7 +140,7 @@
         <property name="textColor" />
         <property name="sortOrder" />
         <many-to-one name="agency" not-null="true" />
-        <set name="routes" table="gtfs_route_lines" lazy="true">
+        <set name="routes" table="gtfs_route_group_pairs" lazy="true">
             <key>
                 <column name="agencyId" />
                 <column name="id" />
@@ -166,14 +166,14 @@
         <property name="color" />
         <property name="textColor" />
         <many-to-one name="agency" not-null="true" />
-        <set name="lines" table="gtfs_route_lines" inverse="true" lazy="true">
+        <set name="routeGroups" table="gtfs_route_group_pairs" inverse="true" lazy="true">
             <key>
                 <column name="agencyId" />
                 <column name="id" />
             </key>
-            <many-to-many class="org.onebusaway.gtfs.model.Line">
-                <column name="lineAgencyId" />
-                <column name="lineId" />
+            <many-to-many class="gtfs.model.RouteGroup">
+                <column name="routeGroupAgencyId" />
+                <column name="routeGroupId" />
             </many-to-many>
 
         </set>

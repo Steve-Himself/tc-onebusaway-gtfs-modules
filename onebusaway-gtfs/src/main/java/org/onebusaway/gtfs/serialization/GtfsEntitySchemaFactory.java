@@ -81,8 +81,8 @@ public class GtfsEntitySchemaFactory {
             getComparatorForIdentityBeanType(Area.class));
     comparators.put(Block.class,
         getComparatorForIdentityBeanType(Block.class));
-    comparators.put(Line.class, getComparatorForIdentityBeanType(Line.class));
-    comparators.put(RouteLine.class, new RouteLineComparator());
+    comparators.put(RouteGroup.class, getComparatorForIdentityBeanType(RouteGroup.class));
+    comparators.put(RouteGroupPair.class, Comparator.comparing(RouteGroupPair::getId));
     comparators.put(Route.class, getComparatorForIdentityBeanType(Route.class));
     comparators.put(Stop.class, getComparatorForIdentityBeanType(Stop.class));
     comparators.put(Trip.class, getComparatorForIdentityBeanType(Trip.class));

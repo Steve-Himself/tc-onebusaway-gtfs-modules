@@ -104,6 +104,9 @@ public class GtfsDaoImpl extends GenericDaoImpl implements GtfsMutableDao {
     return getAllEntitiesForType(Frequency.class);
   }
 
+  public Collection<RouteGroup> getAllRouteGroups() {
+    return getAllEntitiesForType(RouteGroup.class);
+  }
   public Collection<Route> getAllRoutes() {
     return getAllEntitiesForType(Route.class);
   }
@@ -254,22 +257,18 @@ public class GtfsDaoImpl extends GenericDaoImpl implements GtfsMutableDao {
   }
 
   @Override
-  public Collection<Line> getAllLines() {
-      return getAllEntitiesForType(Line.class);
+  public Collection<RouteGroup> getRouteGroups() {
+      return getAllEntitiesForType(RouteGroup.class);
   }
 
   @Override
-  public Collection<RouteLine> getAllRouteLines() {
-    return getAllEntitiesForType(RouteLine.class);
-  }
-  @Override
-  public Collection<Route> getLineRoutes(AgencyAndId lineId) {
-    return getEntityForId(Line.class, lineId).getRoutes();
+  public Collection<Route> getRouteGroupRoutes(AgencyAndId routeGroupId) {
+    return getEntityForId(RouteGroup.class, routeGroupId).getRoutes();
   }
 
   @Override
-  public Collection<Line> getRouteLines(AgencyAndId routeId) {
-    return getEntityForId(Route.class, routeId).getLines();
+  public Collection<RouteGroup> getRouteRouteGroups(AgencyAndId routeId) {
+    return getEntityForId(Route.class, routeId).getRouteGroups();
   }
 
   public Facility getFacilityForId(AgencyAndId id) { return getEntityForId(Facility.class, id);}

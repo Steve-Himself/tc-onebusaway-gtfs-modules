@@ -49,7 +49,7 @@ public class StopLocationFieldMappingImpl extends EntityFieldMappingImpl {
                 return null;
             } else if (type == StopLocation.class) {
                 String entityId = value.toString();
-                String agencyId = _context.getDefaultAgencyId();
+                String agencyId = _context.getAgencyForEntity(Stop.class, entityId);
                 AgencyAndId id = new AgencyAndId(agencyId, entityId);
                 Object stop =  _context.getEntity(Stop.class, id);
                 if (stop != null) return stop;

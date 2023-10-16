@@ -20,6 +20,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.onebusaway.csv_entities.CsvEntityContext;
 import org.onebusaway.csv_entities.CsvEntityReader;
@@ -54,6 +55,8 @@ public class GtfsReader extends CsvEntityReader {
 
   private String _defaultAgencyId;
 
+  private String _defaultStopAgencyId;
+
   private Map<String, String> _agencyIdMapping = new HashMap<String, String>();
 
   private boolean _overwriteDuplicates = false;
@@ -61,48 +64,58 @@ public class GtfsReader extends CsvEntityReader {
   private File _inputLocation = null;
 
   public GtfsReader() {
+    this(Map.of());
+  }
+  public GtfsReader(Map<Class<? extends org.onebusaway.csv_entities.HasExtensions>, Class<?>> extensions) {
+    this(List.of(), extensions);
+  }
 
-    _entityClasses.add(Agency.class);
-    _entityClasses.add(Block.class);
-    _entityClasses.add(ShapePoint.class);
-    _entityClasses.add(Note.class);
-    _entityClasses.add(Area.class);
-    _entityClasses.add(BookingRule.class);
-    _entityClasses.add(Line.class);
-    _entityClasses.add(RouteLine.class);
-    _entityClasses.add(Route.class);
-    _entityClasses.add(RouteStop.class);
-    _entityClasses.add(RouteShape.class);
-    _entityClasses.add(Level.class);
-    _entityClasses.add(Stop.class);
-    _entityClasses.add(Location.class);
-    _entityClasses.add(LocationGroupElement.class);
-    _entityClasses.add(Trip.class);
-    _entityClasses.add(StopAreaElement.class);
-    _entityClasses.add(StopTime.class);
-    _entityClasses.add(ServiceCalendar.class);
-    _entityClasses.add(ServiceCalendarDate.class);
-    _entityClasses.add(RiderCategory.class);
-    _entityClasses.add(FareMedium.class);
-    _entityClasses.add(FareProduct.class);
-    _entityClasses.add(FareLegRule.class);
-    _entityClasses.add(FareAttribute.class);
-    _entityClasses.add(FareRule.class);
-    _entityClasses.add(FareTransferRule.class);
-    _entityClasses.add(Frequency.class);
-    _entityClasses.add(Pathway.class);
-    _entityClasses.add(Transfer.class);
-    _entityClasses.add(FeedInfo.class);
-    _entityClasses.add(Ridership.class);
-    _entityClasses.add(Translation.class);
-    _entityClasses.add(Vehicle.class);
-    _entityClasses.add(Facility.class);
-    _entityClasses.add(FacilityPropertyDefinition.class);
-    _entityClasses.add(FacilityProperty.class);
-    _entityClasses.add(RouteNameException.class);
-    _entityClasses.add(DirectionNameException.class);
-    _entityClasses.add(WrongWayConcurrency.class);
-    _entityClasses.add(DirectionEntry.class);
+  public GtfsReader(List<Class<?>> entityClasses, Map<Class<? extends org.onebusaway.csv_entities.HasExtensions>, Class<?>> extensions) {
+    List<Class<?>> classes = new ArrayList<>(
+            List.of(
+                    Agency.class,
+                    Block.class,
+                    ShapePoint.class,
+                    Note.class,
+                    Area.class,
+                    BookingRule.class,
+                    Route.class,
+                    RouteGroup.class,
+                    RouteGroupPair.class,
+                    RouteStop.class,
+                    RouteShape.class,
+                    Level.class,
+                    Stop.class,
+                    Location.class,
+                    LocationGroupElement.class,
+                    Trip.class,
+                    StopAreaElement.class,
+                    StopTime.class,
+                    ServiceCalendar.class,
+                    ServiceCalendarDate.class,
+                    RiderCategory.class,
+                    FareMedium.class,
+                    FareProduct.class,
+                    FareLegRule.class,
+                    FareAttribute.class,
+                    FareRule.class,
+                    FareTransferRule.class,
+                    Frequency.class,
+                    Pathway.class,
+                    Transfer.class,
+                    FeedInfo.class,
+                    Ridership.class,
+                    Translation.class,
+                    Vehicle.class,
+                    Facility.class,
+                    FacilityPropertyDefinition.class,
+                    FacilityProperty.class,
+                    RouteNameException.class,
+                    DirectionNameException.class,
+                    WrongWayConcurrency.class,
+                    DirectionEntry.class));
+    classes.addAll(entityClasses);
+    _entityClasses = classes.stream().distinct().collect(Collectors.toList());
 
     CsvTokenizerStrategy tokenizerStrategy = new CsvTokenizerStrategy();
     tokenizerStrategy.getCsvParser().setTrimInitialWhitespace(true);
@@ -115,6 +128,8 @@ public class GtfsReader extends CsvEntityReader {
      */
     DefaultEntitySchemaFactory schemaFactory = createEntitySchemaFactory();
     setEntitySchemaFactory(schemaFactory);
+
+    extensions.forEach(schemaFactory::addExtension);
 
     CsvEntityContext ctx = getContext();
     ctx.put(KEY_CONTEXT, _context);
@@ -154,6 +169,18 @@ public class GtfsReader extends CsvEntityReader {
       return _agencies.get(0).getId();
     throw new NoDefaultAgencyIdException();
   }
+
+  public void setDefaultStopAgencyId(String feedId) {
+    _defaultStopAgencyId = feedId;
+  }
+
+  public String getDefaultStopAgencyId() {
+    if (_defaultStopAgencyId != null)
+      return _defaultStopAgencyId;
+
+    return getDefaultAgencyId();
+  }
+
 
   public void addAgencyIdMapping(String fromAgencyId, String toAgencyId) {
     _agencyIdMapping.put(fromAgencyId, toAgencyId);
@@ -330,9 +357,9 @@ public class GtfsReader extends CsvEntityReader {
       } else if (entity instanceof Level) {
         Level level = (Level) entity;
         registerAgencyId(Level.class, level.getId());
-      } else if (entity instanceof Line) {
-        Line line = (Line) entity;
-        registerAgencyId(Line.class, line.getId());
+      } else if (entity instanceof RouteGroup) {
+        RouteGroup routeGroup = (RouteGroup) entity;
+        registerAgencyId(RouteGroup.class, routeGroup.getId());
       } else if (entity instanceof Route) {
         Route route = (Route) entity;
         registerAgencyId(Route.class, route.getId());
@@ -425,6 +452,10 @@ public class GtfsReader extends CsvEntityReader {
 
     public String getDefaultAgencyId() {
       return GtfsReader.this.getDefaultAgencyId();
+    }
+
+    public String getDefaultStopAgencyId() {
+      return GtfsReader.this.getDefaultStopAgencyId();
     }
 
     public List<Agency> getAgencies() {

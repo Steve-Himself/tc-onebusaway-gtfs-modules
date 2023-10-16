@@ -23,7 +23,9 @@ import java.util.List;
 public interface GtfsReaderContext {
 
   public String getDefaultAgencyId();
-  
+
+  public String getDefaultStopAgencyId();
+
   public String getTranslatedAgencyId(String agencyId);
 
   public List<Agency> getAgencies();

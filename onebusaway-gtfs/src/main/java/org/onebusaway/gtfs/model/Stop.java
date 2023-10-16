@@ -21,6 +21,7 @@ import org.onebusaway.csv_entities.schema.annotations.CsvFields;
 import org.onebusaway.gtfs.serialization.mappings.DefaultAgencyIdFieldMappingFactory;
 import org.onebusaway.gtfs.serialization.mappings.EntityFieldMappingFactory;
 import org.onebusaway.gtfs.serialization.mappings.LatLonFieldMappingFactory;
+import org.onebusaway.gtfs.serialization.mappings.StopIdFieldMappingFactory;
 
 @CsvFields(filename = "stops.txt", prefix = "stop_")
 public final class Stop extends IdentityBean<AgencyAndId> implements StopLocation {
@@ -39,7 +40,7 @@ public final class Stop extends IdentityBean<AgencyAndId> implements StopLocatio
 
   public static final int LOCATION_TYPE_BOARDING_AREA = 4;
 
-  @CsvField(mapping = DefaultAgencyIdFieldMappingFactory.class)
+  @CsvField(mapping = StopIdFieldMappingFactory.class)
   private AgencyAndId id;
 
   @CsvField(optional = true)
@@ -102,15 +103,6 @@ public final class Stop extends IdentityBean<AgencyAndId> implements StopLocatio
   @CsvField(name="stop_public", optional = true)
   private boolean isPublic;
 
-  @CsvField(name="district_id", optional = true)
-  private String districtId;
-
-  @CsvField(name="district_name", optional = true)
-  private String districtName;
-
-  @CsvField(name="municipality", optional = true)
-  private String municipality;
-
   public Stop() {
 
   }
@@ -136,9 +128,6 @@ public final class Stop extends IdentityBean<AgencyAndId> implements StopLocatio
     this.regionalFareCardAccepted = obj.regionalFareCardAccepted;
     this.ttsStopName = obj.ttsStopName;
     this.isPublic = obj.isPublic;
-    this.districtId = obj.districtId;
-    this.districtName = obj.districtName;
-    this.municipality = obj.municipality;
   }
 
   public AgencyAndId getId() {
@@ -320,30 +309,6 @@ public final class Stop extends IdentityBean<AgencyAndId> implements StopLocatio
 
   public void setIsPublic(boolean isPublic) {
     this.isPublic = isPublic;
-  }
-
-  public String getDistrictId() {
-    return districtId;
-  }
-
-  public void setDistrictId(String districtId) {
-    this.districtId = districtId;
-  }
-
-  public String getDistrictName() {
-    return districtName;
-  }
-
-  public void setDistrictName(String districtName) {
-    this.districtName = districtName;
-  }
-
-  public String getMunicipality() {
-    return municipality;
-  }
-
-  public void setMunicipality(String municipality) {
-    this.municipality = municipality;
   }
 
   public void setTtsStopName(String ttsStopName) {

@@ -28,11 +28,9 @@ import static org.junit.Assert.fail;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -41,10 +39,9 @@ import org.onebusaway.csv_entities.exceptions.CsvEntityIOException;
 import org.onebusaway.csv_entities.exceptions.InvalidValueEntityException;
 import org.onebusaway.csv_entities.exceptions.MissingRequiredFieldException;
 import org.onebusaway.gtfs.GtfsTestData;
-import org.onebusaway.gtfs.impl.GtfsRelationalDaoImpl;
 import org.onebusaway.gtfs.model.*;
 import org.onebusaway.gtfs.model.calendar.ServiceDate;
-import org.onebusaway.gtfs.serialization.mappings.AgencyNotFoundForRouteException;
+import org.onebusaway.gtfs.serialization.mappings.AgencyNotFoundException;
 import org.onebusaway.gtfs.services.GtfsDao;
 import org.onebusaway.gtfs.services.GtfsMutableRelationalDao;
 import org.onebusaway.gtfs.services.GtfsRelationalDao;
@@ -905,7 +902,7 @@ public class GtfsReaderTest extends BaseGtfsTest {
         gtfs.read(newReader("tacos"));
         fail();
       } catch (CsvEntityIOException e) {
-        assertTrue(e.getCause() instanceof AgencyNotFoundForRouteException);
+        assertTrue(e.getCause() instanceof AgencyNotFoundException);
       }
     }
   }

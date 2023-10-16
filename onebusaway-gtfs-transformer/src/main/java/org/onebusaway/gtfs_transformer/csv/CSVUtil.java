@@ -16,20 +16,28 @@
 package org.onebusaway.gtfs_transformer.csv;
 
 import org.onebusaway.csv_entities.CsvEntityReader;
-import org.onebusaway.csv_entities.CsvInputSource;
 import org.onebusaway.csv_entities.EntityHandler;
-import org.onebusaway.csv_entities.schema.EntitySchemaFactory;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CSVUtil {
-    public static <T> List<T> readCsv(final Class<T> klass, String csv) {
+    public static <T> List<T> readCsv(final Class<T> klass, String csv)  {
         return readCsv(klass, csv, null);
     }
 
-    public static <T> List<T> readCsv(final Class<T> klass, String csv, CsvEntityReader reader) {
+    public static <T> List<T> readCsv(final Class<T> klass, String csv, CsvEntityReader reader)  {
+        try {
+            return readCsv(klass, new FileReader(csv), null);
+        } catch (FileNotFoundException e) {
+            return List.of();
+        }
+    }
+
+    public static <T> List<T> readCsv(final Class<T> klass, InputStreamReader inputStream, CsvEntityReader reader) {
         if (reader == null) {
             reader = new CsvEntityReader();
         }
@@ -41,7 +49,7 @@ public class CSVUtil {
             }
         });
         try {
-            reader.readEntities(klass, new FileReader(csv));
+            reader.readEntities(klass, inputStream);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -3,29 +3,29 @@ package org.onebusaway.gtfs.model;
 import org.onebusaway.csv_entities.schema.annotations.CsvField;
 import org.onebusaway.csv_entities.schema.annotations.CsvFields;
 import org.onebusaway.gtfs.serialization.mappings.EntityFieldMappingFactory;
-import org.onebusaway.gtfs.serialization.mappings.RouteLineIdFieldMappingFactory;
+import org.onebusaway.gtfs.serialization.mappings.RouteGroupIdFieldMappingFactory;
 
-@CsvFields(filename = "route_lines_ext.txt", prefix = "route_line_", required = false)
-public final class RouteLine extends IdentityBean<String> {
-  @CsvField(mapping = RouteLineIdFieldMappingFactory.class)
+@CsvFields(filename = "route_group_pairs.txt", required = false)
+public final class RouteGroupPair extends IdentityBean<String> {
+  @CsvField(mapping = RouteGroupIdFieldMappingFactory.class)
   private String id;
 
   @CsvField(name = "route_id", mapping = EntityFieldMappingFactory.class)
   private Route route;
 
-  @CsvField(name = "line_id", mapping = EntityFieldMappingFactory.class)
-  private Line line;
+  @CsvField(name = "route_group_id", mapping = EntityFieldMappingFactory.class)
+  private RouteGroup routeGroup;
 
   @CsvField(name = "is_default", optional = true)
   private boolean isDefault;
 
-  public RouteLine() {
+  public RouteGroupPair() {
   }
 
-  public RouteLine(RouteLine r) {
+  public RouteGroupPair(RouteGroupPair r) {
     this.id = r.id;
     this.route = r.route;
-    this.line = r.line;
+    this.routeGroup = r.routeGroup;
     this.isDefault = r.isDefault;
   }
 
@@ -45,12 +45,12 @@ public final class RouteLine extends IdentityBean<String> {
     this.route = route;
   }
 
-  public Line getLine() {
-    return line;
+  public RouteGroup getRouteGroup() {
+    return routeGroup;
   }
 
-  public void setLine(Line line) {
-    this.line = line;
+  public void setRouteGroup(RouteGroup routeGroup) {
+    this.routeGroup = routeGroup;
   }
 
   public boolean getIsDefault() {
@@ -63,7 +63,7 @@ public final class RouteLine extends IdentityBean<String> {
 
   @Override
   public String toString() {
-    return "<RouteLine " + id + ">";
+    return "<RouteGroups " + id + ">";
   }
 
 }

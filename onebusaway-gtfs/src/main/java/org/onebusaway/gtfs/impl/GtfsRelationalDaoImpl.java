@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.onebusaway.csv_entities.exceptions.EntityInstantiationException;
 import org.onebusaway.csv_entities.schema.BeanWrapper;
@@ -45,7 +46,7 @@ public class GtfsRelationalDaoImpl extends GtfsDaoImpl implements
 
   private Map<AgencyAndId, List<String>> _tripAgencyIdsByServiceId = null;
 
-  private Map<Agency, List<Line>> _linesByAgency = null;
+  private Map<Agency, List<RouteGroup>> _routeGroupsByAgency = null;
 
   private Map<Agency, List<Route>> _routesByAgency = null;
 
@@ -57,7 +58,7 @@ public class GtfsRelationalDaoImpl extends GtfsDaoImpl implements
 
   private Map<Stop, List<StopTime>> _stopTimesByStop = null;
 
-  private Map<Line, List<Trip>> _tripsByLine = null;
+  private Map<RouteGroup, List<Trip>> _tripsByRouteGroup = null;
 
   private Map<Route, List<Trip>> _tripsByRoute = null;
 
@@ -139,10 +140,10 @@ public class GtfsRelationalDaoImpl extends GtfsDaoImpl implements
   }
 
   @Override
-  public List<Line> getLinesForAgency(Agency agency) {
-    if (_linesByAgency == null)
-      _linesByAgency = mapToValueList(getAllLines(), "agency", Agency.class);
-    return list(_linesByAgency.get(agency));
+  public List<RouteGroup> getRouteGroupsForAgency(Agency agency) {
+    if (_routeGroupsByAgency == null)
+      _routeGroupsByAgency = mapToValueList(getRouteGroups(), "agency", Agency.class);
+    return list(_routeGroupsByAgency.get(agency));
   }
 
   @Override
@@ -212,10 +213,17 @@ public class GtfsRelationalDaoImpl extends GtfsDaoImpl implements
   }
 
   @Override
-  public List<Trip> getTripsForLine(Line line) {
-    if (_tripsByLine == null)
-      _tripsByLine = mapToValueList(getAllTrips(), "line", Line.class);
-    return list(_tripsByLine.get(line));
+  public List<Trip> getTripsForLine(RouteGroup routeGroup) {
+    if (_tripsByRouteGroup == null) {
+      _tripsByRouteGroup = new HashMap<>();
+      getAllRouteGroups().forEach(rg-> {
+        List<Trip> trips = rg.getRoutes().stream().flatMap(r->getTripsForRoute(r).stream()).collect(Collectors.toList());
+        if (!trips.isEmpty()) {
+          _tripsByRouteGroup.put(rg, trips);
+        }
+      });
+    }
+    return list(_tripsByRouteGroup.get(routeGroup));
   }
 
   @Override

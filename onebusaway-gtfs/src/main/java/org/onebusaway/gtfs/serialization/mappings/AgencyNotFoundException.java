@@ -36,33 +36,18 @@ import org.onebusaway.gtfs.serialization.GtfsReaderContext;
  * @author bdferris
  * 
  */
-public class AgencyNotFoundForRouteException extends CsvEntityException {
+public class AgencyNotFoundException extends CsvEntityException {
 
   private static final long serialVersionUID = 1L;
 
-  private Route _route;
-
-  private String _agencyId;
-
-  public AgencyNotFoundForRouteException(Class<?> entityType, Route route,
-      String agencyId) {
-    super(entityType, "could not find Agency with specified id=" + agencyId
-        + " for route " + route);
-    _route = route;
-    _agencyId = agencyId;
+  public AgencyNotFoundException(Class<?> entityType, Object entity,
+                                 String agencyId) {
+    super(entityType, "could not find " + entityType.getSimpleName() + " with specified id=" + agencyId
+        + " for route " + entity);
   }
 
-  public AgencyNotFoundForRouteException(Class<?> entityType, Route route) {
-    super(entityType, "could not find Agency for route " + route);
-    _route = route;
-  }
-
-  public Route getRoute() {
-    return _route;
-  }
-
-  public String getAgencyId() {
-    return _agencyId;
+  public AgencyNotFoundException(Class<?> entityType, Object entity) {
+    super(entityType, "could not find Agency for " + entityType.getSimpleName() + " " + entity);
   }
 
 }

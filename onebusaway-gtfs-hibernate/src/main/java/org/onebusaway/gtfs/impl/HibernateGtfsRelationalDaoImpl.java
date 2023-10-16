@@ -109,23 +109,18 @@ public class HibernateGtfsRelationalDaoImpl implements GtfsMutableRelationalDao 
   }
 
   @Override
-  public Collection<Line> getAllLines() {
-    return _ops.find("FROM Line line");
+  public Collection<RouteGroup> getRouteGroups() {
+    return _ops.find("FROM RouteGroup");
   }
 
   @Override
-  public List<RouteLine> getAllRouteLines() {
-    return _ops.find("FROM RouteLine routeLine");
+  public Collection<Route> getRouteGroupRoutes(AgencyAndId routeGroupId) {
+    return _ops.get(RouteGroup.class, routeGroupId).getRoutes();
   }
 
   @Override
-  public Collection<Route> getLineRoutes(AgencyAndId lineId) {
-    return _ops.get(Line.class, lineId).getRoutes();
-  }
-
-  @Override
-  public Collection<Line> getRouteLines(AgencyAndId routeId) {
-    return _ops.get(Route.class, routeId).getLines();
+  public Collection<RouteGroup> getRouteRouteGroups(AgencyAndId routeId) {
+    return _ops.get(Route.class, routeId).getRouteGroups();
   }
 
   @Override
@@ -391,8 +386,8 @@ public class HibernateGtfsRelationalDaoImpl implements GtfsMutableRelationalDao 
   }
 
   @Override
-  public List<Line> getLinesForAgency(Agency agency) {
-    return _ops.findByNamedQueryAndNamedParam("linesForAgency", "agency",
+  public List<RouteGroup> getRouteGroupsForAgency(Agency agency) {
+    return _ops.findByNamedQueryAndNamedParam("routeGroupsForAgency", "agency",
             agency);
   }
 
@@ -409,8 +404,8 @@ public class HibernateGtfsRelationalDaoImpl implements GtfsMutableRelationalDao 
   }
 
   @Override
-  public List<Trip> getTripsForLine(Line line) {
-    return _ops.findByNamedQueryAndNamedParam("tripsByLine", "line", line);
+  public List<Trip> getTripsForLine(RouteGroup routeGroup) {
+    return _ops.findByNamedQueryAndNamedParam("tripsByRouteGroup", "line", routeGroup);
   }
 
   @Override

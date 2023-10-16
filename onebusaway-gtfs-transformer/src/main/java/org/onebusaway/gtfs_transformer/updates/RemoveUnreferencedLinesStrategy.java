@@ -1,6 +1,6 @@
 package org.onebusaway.gtfs_transformer.updates;
 
-import org.onebusaway.gtfs.model.Line;
+import org.onebusaway.gtfs.model.RouteGroup;
 import org.onebusaway.gtfs.services.GtfsMutableRelationalDao;
 import org.onebusaway.gtfs_transformer.services.GtfsTransformStrategy;
 import org.onebusaway.gtfs_transformer.services.TransformContext;
@@ -20,10 +20,10 @@ public class RemoveUnreferencedLinesStrategy implements GtfsTransformStrategy {
 
 	    int removedLineCount = 0;
 
-	      for (Line line : dao.getAllLines()) {
+	      for (RouteGroup routeGroup : dao.getRouteGroups()) {
 
-	          if (line.getRoutes().isEmpty()) {
-	        	  dao.removeEntity(line);
+	          if (routeGroup.getRoutes().isEmpty()) {
+	        	  dao.removeEntity(routeGroup);
 				  removedLineCount++;
 	      }
 	    }

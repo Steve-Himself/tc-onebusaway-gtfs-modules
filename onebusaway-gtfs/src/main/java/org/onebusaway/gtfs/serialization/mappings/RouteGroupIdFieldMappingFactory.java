@@ -6,7 +6,7 @@ import org.onebusaway.csv_entities.schema.*;
 
 import java.util.Map;
 
-public class RouteLineIdFieldMappingFactory implements FieldMappingFactory {
+public class RouteGroupIdFieldMappingFactory implements FieldMappingFactory {
 
   public FieldMapping createFieldMapping(EntitySchemaFactory schemaFactory,
       Class<?> entityType, String csvFieldName, String objFieldName,
@@ -27,16 +27,16 @@ public class RouteLineIdFieldMappingFactory implements FieldMappingFactory {
     public void translateFromCSVToObject(CsvEntityContext context,
         Map<String, Object> csvValues, BeanWrapper object) {
 
-      String lineId = (String) csvValues.get("line_id");
+      String routeGroupId = (String) csvValues.get("route_group_id");
       String routeId = (String) csvValues.get("route_id");
-      boolean missing = (lineId == null || lineId.isEmpty())
+      boolean missing = (routeGroupId == null || routeGroupId.isEmpty())
           || (routeId == null || routeId.isEmpty());
       if (missing) {
         if (_required)
           throw new MissingRequiredFieldException(_entityType, _csvFieldName);
         return;
       }
-      String id = lineId + ":" + routeId;
+      String id = routeGroupId + ":" + routeId;
       object.setPropertyValue(_objFieldName, id);
     }
   }

@@ -3,13 +3,13 @@ package org.onebusaway.gtfs.model;
 import org.onebusaway.csv_entities.schema.annotations.CsvField;
 import org.onebusaway.csv_entities.schema.annotations.CsvFields;
 import org.onebusaway.gtfs.serialization.mappings.DefaultAgencyIdFieldMappingFactory;
-import org.onebusaway.gtfs.serialization.mappings.RouteAgencyFieldMappingFactory;
+import org.onebusaway.gtfs.serialization.mappings.RouteGroupAgencyFieldMappingFactory;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@CsvFields(filename = "lines_ext.txt", prefix = "line_", required = false)
-public final class Line extends IdentityBean<AgencyAndId> {
+@CsvFields(filename = "route_group.txt", prefix = "route_group_", required = false)
+public final class RouteGroup extends IdentityBean<AgencyAndId> {
 
   private static final long serialVersionUID = 1L;
 
@@ -18,7 +18,7 @@ public final class Line extends IdentityBean<AgencyAndId> {
   @CsvField(mapping = DefaultAgencyIdFieldMappingFactory.class)
   private AgencyAndId id;
 
-  @CsvField(name = "agency_id", optional = true, mapping = RouteAgencyFieldMappingFactory.class, order = -1)
+  @CsvField(name = "agency_id", optional = true, mapping = RouteGroupAgencyFieldMappingFactory.class, order = -1)
   private Agency agency;
 
   @CsvField(optional = true, alwaysIncludeInOutput = true)
@@ -42,11 +42,11 @@ public final class Line extends IdentityBean<AgencyAndId> {
   @CsvField(ignore = true)
   private Set<Route> routes = new HashSet<>();
 
-  public Line() {
+  public RouteGroup() {
 
   }
 
-  public Line(Line r) {
+  public RouteGroup(RouteGroup r) {
     this.id = r.id;
     this.agency = r.agency;
     this.shortName = r.shortName;
@@ -135,7 +135,7 @@ public final class Line extends IdentityBean<AgencyAndId> {
 
   @Override
   public String toString() {
-    return "<Line " + id + " " + shortName + ">";
+    return "<RouteGroup " + id + " " + shortName + ">";
   }
 
 }
